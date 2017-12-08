@@ -11,7 +11,7 @@ class nrpe::params  {
 	'RedHat': {
 	    $packages=["nrpe", "nagios-plugins-all"]
 	    $service="nrpe"
-	    $plugin_loc="/usr/lib/nagios64/plugins"
+	    $plugin_loc="/usr/lib64/nagios/plugins"
 	    $nrpe_user="nrpe"
 	    $pid_file="/var/run/nrpe/nrpe.pid"
 	    $config_dir="/etc/nrpe.d"
