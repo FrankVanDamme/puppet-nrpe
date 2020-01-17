@@ -17,6 +17,7 @@ class nrpe(
   }
     file { "/etc/nagios/nrpe.d":
 	ensure => directory,
+	require => Package[$nrpe::params::packages],
     }
     notify  { "nrpe: allowed_hosts is $allowed_hosts": }
 
