@@ -6,7 +6,8 @@ class nrpe(
     $command_timeout = 60,
     $packages=$nrpe::params::packages,
     $pid_file=$nrpe::params::pid_file,
-    $config_dir=$nrpe::params::config_dir
+    $config_dir=$nrpe::params::config_dir,
+    Hash $configs = {},
     ) inherits nrpe::params {
     notify { "nrpe package: $nrpe::params::packages":}
 
@@ -44,5 +45,12 @@ class nrpe(
     hasstatus => false,
     pattern => "nrpe",
     require => [Package[$nrpe::params::packages], File["/etc/nagios/nrpe.cfg"]]
+  }
+
+  $configs_ = hiera_hash("${module_name}::configs", {})
+  $configs.each | $name, $args | {
+      Resource["${module_name}::config"] { $name:
+          * => $args
+      }
   }
 }
