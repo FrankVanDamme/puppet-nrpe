@@ -39,6 +39,29 @@ class nrpe(
     owner => root,
     group => $nrpe::params::nrpe_user
   }
+
+  ## system service, including override for systemd - 
+  ## allows monitoring partitions under /tmp or /var/tmp
+
+  if ( $::osfamily == "Debian" ){
+    file { "/etc/systemd/system/${nrpe::params::service}.service.d":
+      ensure => directory,
+    }
+    ->
+    file { "nrpe_systemd_override":
+      path    => "/etc/systemd/system/${nrpe::params::service}.service.d/override.conf",
+      ensure  => present,
+      content => template("nrpe/nrpe.systemd_override.erb"),
+      before  => Service[$nrpe::params::service],
+    }
+    ~>
+    exec { "nrpe_wrapper_refresh_systemd":
+      command     => "/bin/systemctl daemon-reload",
+      refreshonly => true,
+      notify      => Service[$nrpe::params::service],
+    }
+  }
+
   service { $nrpe::params::service:
     ensure => true,
     enable => true,
