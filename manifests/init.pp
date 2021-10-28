@@ -9,7 +9,6 @@ class nrpe(
     $config_dir=$nrpe::params::config_dir,
     Hash $configs = {},
     ) inherits nrpe::params {
-    notify { "nrpe package: $nrpe::params::packages":}
 
   tag("nrpe")
 	# "nagios-plugins-extra",  -> enkel in ubuntu
@@ -20,7 +19,6 @@ class nrpe(
 	ensure => directory,
 	require => Package[$nrpe::params::packages],
     }
-    notify  { "nrpe: allowed_hosts is $allowed_hosts": }
 
 # dit vind ik vuil aanvoelen
 

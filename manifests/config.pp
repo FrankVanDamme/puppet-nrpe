@@ -7,8 +7,7 @@ define nrpe::config($content = "") {
     file { "$nrpe::config_dir/$name":
       content => "$content\n",
       notify => Exec["nrpe-config"],
-      require => [ Package[$packages],  File["/etc/nagios/nrpe.d"]],
-      #require =>  File["/etc/nagios/nrpe.d"],
+      require => [ Package[$nrpe::packages],  File["/etc/nagios/nrpe.d"]],
     }
   }
 }
