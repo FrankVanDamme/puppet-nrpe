@@ -10,14 +10,14 @@ class nrpe(
     Hash $configs = {},
     ) inherits nrpe::params {
 
-  tag("nrpe")
-	# "nagios-plugins-extra",  -> enkel in ubuntu
-  package { $::nrpe::params::packages:
-	ensure => latest,
-  }
+    tag("nrpe")
+    # "nagios-plugins-extra",  -> enkel in ubuntu
+    package { $::nrpe::params::packages:
+        ensure => latest,
+    }
     file { "/etc/nagios/nrpe.d":
-	ensure => directory,
-	require => Package[$nrpe::params::packages],
+        ensure => directory,
+        require => Package[$nrpe::params::packages],
     }
 
 # dit vind ik vuil aanvoelen
@@ -41,7 +41,7 @@ class nrpe(
   ## system service, including override for systemd - 
   ## allows monitoring partitions under /tmp or /var/tmp
 
-  if ( $::osfamily == "Debian" ){
+  if ( $facts[os][family] == "Debian" ){
     file { "/etc/systemd/system/${nrpe::params::service}.service.d":
       ensure => directory,
     }
