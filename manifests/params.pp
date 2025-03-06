@@ -1,7 +1,7 @@
 class nrpe::params  {
     case $facts[os][family] {
         'Debian': {
-            $packages=['nagios-nrpe-server', 'nagios-plugins', 'nagios-plugins-basic', 'nagios-plugins-standard']
+            $packages=['nagios-nrpe-server', 'monitoring-plugins', 'monitoring-plugins-basic', 'monitoring-plugins-standard']
             $service='nagios-nrpe-server'
             $plugin_loc='/usr/lib/nagios/plugins'
             $nrpe_user='nagios'
